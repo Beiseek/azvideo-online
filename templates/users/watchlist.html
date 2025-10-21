@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+{% load static i18n %}
+
+{% block title %}{% trans "Мой список" %} - {{ SITE_NAME }}{% endblock %}
+
+{% block content %}
+<div class="container my-5" style="padding-top: 100px;">
+    <h1 class="mb-4">
+        <i class="fas fa-bookmark"></i> {% trans "Мой список для просмотра" %}
+    </h1>
+    
+    <div class="row">
+        <div class="col-12">
+            <ul class="nav nav-tabs mb-4" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#movies-tab" type="button">
+                        <i class="fas fa-film"></i> {% trans "Фильмы" %}
+                        <span class="badge bg-danger ms-2">{{ movies.count }}</span>
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#series-tab" type="button">
+                        <i class="fas fa-tv"></i> {% trans "Сериалы" %}
+                        <span class="badge bg-danger ms-2">{{ series.count }}</span>
+                    </button>
+                </li>
+            </ul>
+            
+            <div class="tab-content">
+                <!-- Movies Tab -->
+                <div class="tab-pane fade show active" id="movies-tab">
+                    {% if movies %}
+                    <div class="row row-cols-2 row-cols-md-4 row-cols-lg-5 g-4">
+                        {% for movie in movies %}
+                        <div class="col">
+                            <div class="movie-card">
+                                <a href="{% url 'movie_detail' movie.slug %}">
+                                    {% if movie.poster %}
+                                    <img src="{{ movie.poster.url }}" alt="{{ movie.title_uz }}" class="movie-poster">
+                                    {% else %}
+                                    <div class="movie-poster no-image">
+                                        <i class="fas fa-film"></i>
+                                    </div>
+                                    {% endif %}
+                                    <div class="movie-info">
+                                        <h6 class="movie-title">{{ movie.title_uz }}</h6>
+                                        <div class="movie-meta">
+                                            <span class="movie-year">{{ movie.year }}</span>
+                                            <span class="movie-rating">
+                                                <i class="fas fa-star"></i> {{ movie.rating_avg|floatformat:1 }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div class="text-center py-5">
+                        <i class="fas fa-film text-muted" style="font-size: 4rem;"></i>
+                        <p class="text-muted mt-3">{% trans "У вас пока нет фильмов в списке" %}</p>
+                        <a href="{% url 'movie_list' %}" class="btn btn-danger">
+                            {% trans "Перейти к каталогу" %}
+                        </a>
+                    </div>
+                    {% endif %}
+                </div>
+                
+                <!-- Series Tab -->
+                <div class="tab-pane fade" id="series-tab">
+                    {% if series %}
+                    <div class="row row-cols-2 row-cols-md-4 row-cols-lg-5 g-4">
+                        {% for show in series %}
+                        <div class="col">
+                            <div class="movie-card">
+                                <a href="{% url 'series_detail' show.slug %}">
+                                    {% if show.poster %}
+                                    <img src="{{ show.poster.url }}" alt="{{ show.title_uz }}" class="movie-poster">
+                                    {% else %}
+                                    <div class="movie-poster no-image">
+                                        <i class="fas fa-tv"></i>
+                                    </div>
+                                    {% endif %}
+                                    <div class="movie-info">
+                                        <h6 class="movie-title">{{ show.title_uz }}</h6>
+                                        <div class="movie-meta">
+                                            <span class="movie-year">{{ show.year }}</span>
+                                            <span class="movie-rating">
+                                                <i class="fas fa-star"></i> {{ show.rating_avg|floatformat:1 }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div class="text-center py-5">
+                        <i class="fas fa-tv text-muted" style="font-size: 4rem;"></i>
+                        <p class="text-muted mt-3">{% trans "У вас пока нет сериалов в списке" %}</p>
+                        <a href="{% url 'series_list' %}" class="btn btn-danger">
+                            {% trans "Перейти к каталогу" %}
+                        </a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

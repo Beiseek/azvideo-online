@@ -1,0 +1,215 @@
+# Uzbek translation for Kinosite
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+
+msgid "Главная"
+msgstr "Bosh sahifa"
+
+msgid "Фильмы"
+msgstr "Filmlar"
+
+msgid "Сериалы"
+msgstr "Seriallar"
+
+msgid "Новости"
+msgstr "Yangiliklar"
+
+msgid "Поиск фильмов, сериалов..."
+msgstr "Filmlar, seriallarni qidirish..."
+
+msgid "Вход"
+msgstr "Kirish"
+
+msgid "Регистрация"
+msgstr "Ro'yxatdan o'tish"
+
+msgid "Профиль"
+msgstr "Profil"
+
+msgid "Избранное"
+msgstr "Sevimlilар"
+
+msgid "Мой список"
+msgstr "Mening ro'yxatim"
+
+msgid "История"
+msgstr "Tarix"
+
+msgid "Выход"
+msgstr "Chiqish"
+
+msgid "Популярные фильмы"
+msgstr "Ommabop filmlar"
+
+msgid "Новые сериалы"
+msgstr "Yangi seriallar"
+
+msgid "Смотреть все"
+msgstr "Barchasini ko'rish"
+
+msgid "Жанры"
+msgstr "Janrlar"
+
+msgid "Навигация"
+msgstr "Navigatsiya"
+
+msgid "Информация"
+msgstr "Ma'lumot"
+
+msgid "О нас"
+msgstr "Biz haqimizda"
+
+msgid "Контакты"
+msgstr "Kontaktlar"
+
+msgid "Правила"
+msgstr "Qoidalar"
+
+msgid "Конфиденциальность"
+msgstr "Maxfiylik"
+
+msgid "Социальные сети"
+msgstr "Ijtimoiy tarmoqlar"
+
+msgid "Все права защищены."
+msgstr "Barcha huquqlar himoyalangan."
+
+msgid "Создано с"
+msgstr "Yaratilgan"
+
+msgid "для любителей кино"
+msgstr "kino ishqibozlari uchun"
+
+msgid "Год"
+msgstr "Yil"
+
+msgid "Длительность"
+msgstr "Davomiyligi"
+
+msgid "мин"
+msgstr "daq"
+
+msgid "Просмотры"
+msgstr "Ko'rishlar"
+
+msgid "Рейтинг"
+msgstr "Reyting"
+
+msgid "оценок"
+msgstr "baho"
+
+msgid "Страны"
+msgstr "Mamlakatlar"
+
+msgid "Смотреть трейлер"
+msgstr "Treylerni ko'rish"
+
+msgid "Поделиться"
+msgstr "Ulashish"
+
+msgid "Описание"
+msgstr "Tavsif"
+
+msgid "Режиссеры"
+msgstr "Rejissyorlar"
+
+msgid "В ролях"
+msgstr "Rollarda"
+
+msgid "Оцените фильм"
+msgstr "Filmni baholang"
+
+msgid "Ваша оценка"
+msgstr "Sizning bahoyingiz"
+
+msgid "Нажмите на звезду для оценки"
+msgstr "Baholash uchun yulduzchaga bosing"
+
+msgid "Комментарии"
+msgstr "Sharhlar"
+
+msgid "Ваш комментарий..."
+msgstr "Sizning sharhingiz..."
+
+msgid "Отправить"
+msgstr "Yuborish"
+
+msgid "Комментарии проходят модерацию"
+msgstr "Sharhlar moderatsiyadan o'tadi"
+
+msgid "Войдите"
+msgstr "Kiring"
+
+msgid "чтобы оставить комментарий"
+msgstr "sharh qoldirish uchun"
+
+msgid "Пока нет комментариев"
+msgstr "Hozircha sharhlar yo'q"
+
+msgid "Похожие фильмы"
+msgstr "O'xshash filmlar"
+
+msgid "Сезонов"
+msgstr "Mavsumlar"
+
+msgid "Статус"
+msgstr "Holat"
+
+msgid "Сезон"
+msgstr "Mavsum"
+
+msgid "эпизодов"
+msgstr "epizodlar"
+
+msgid "Смотреть"
+msgstr "Ko'rish"
+
+msgid "Результаты поиска"
+msgstr "Qidiruv natijalari"
+
+msgid "Поиск"
+msgstr "Qidiruv"
+
+msgid "Все"
+msgstr "Hammasi"
+
+msgid "Найдено результатов"
+msgstr "Topilgan natijalar"
+
+msgid "Фильм"
+msgstr "Film"
+
+msgid "Сериал"
+msgstr "Serial"
+
+msgid "Ничего не найдено"
+msgstr "Hech narsa topilmadi"
+
+msgid "Попробуйте изменить поисковый запрос"
+msgstr "Qidiruv so'rovini o'zgartirib ko'ring"
+
+msgid "Каталог фильмов"
+msgstr "Filmlar katalogi"
+
+msgid "Фильтры"
+msgstr "Filtrlar"
+
+msgid "Применить"
+msgstr "Qo'llash"
+
+msgid "Сбросить"
+msgstr "Tozalash"
+
+msgid "Найдено"
+msgstr "Topildi"
+
+msgid "фильмов"
+msgstr "filmlar"
+
+msgid "Фильмы не найдены"
+msgstr "Filmlar topilmadi"
+
+msgid "Попробуйте изменить фильтры"
+msgstr "Filtrlarni o'zgartirib ko'ring"
+

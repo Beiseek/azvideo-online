@@ -1,0 +1,150 @@
+{% extends 'base.html' %}
+{% load static i18n core_tags %}
+
+{% block title %}{% trans "Фильмы" %} - {{ SITE_NAME }}{% endblock %}
+
+{% block content %}
+<div class="container my-5" style="padding-top: 60px;">
+    <h1 class="mb-4"><i class="fas fa-video"></i> {% trans "Каталог фильмов" %}</h1>
+    
+    <div class="row">
+        <!-- Filters Sidebar -->
+        <div class="col-lg-3">
+            <div class="filters-sidebar">
+                <h4 class="filter-title mb-3">
+                    <i class="fas fa-filter"></i> {% trans "Фильтры" %}
+                </h4>
+                
+                <form method="get" id="filterForm">
+                    <!-- Genres -->
+                    <div class="filter-group">
+                        <button class="btn btn-outline-danger btn-sm w-100 mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#genresCollapse" aria-expanded="false" aria-controls="genresCollapse">
+                            <i class="fas fa-list"></i> {% trans "Janrlar" %} <i class="fas fa-chevron-down ms-1"></i>
+                        </button>
+                        <div class="collapse" id="genresCollapse">
+                            <div class="genres-filter-list">
+                                {% for genre in genres %}
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="genres" value="{{ genre.id }}" id="genre{{ genre.id }}" {% if genre.id|stringformat:"s" in request.GET|get_list:"genres" %}checked{% endif %}>
+                                    <label class="form-check-label" for="genre{{ genre.id }}">
+                                        {{ genre.name_az }}
+                                    </label>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Countries -->
+                    <div class="filter-group">
+                        <button class="btn btn-outline-danger btn-sm w-100 mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#countriesCollapse" aria-expanded="false" aria-controls="countriesCollapse">
+                            <i class="fas fa-globe"></i> {% trans "Страны" %} <i class="fas fa-chevron-down ms-1"></i>
+                        </button>
+                        <div class="collapse" id="countriesCollapse">
+                            <div class="countries-filter-list">
+                                {% for country in countries %}
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="countries" value="{{ country.id }}" id="country{{ country.id }}" {% if country.id|stringformat:"s" in request.GET|get_list:"countries" %}checked{% endif %}>
+                                    <label class="form-check-label" for="country{{ country.id }}">
+                                        {{ country.name_az }}
+                                    </label>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Actors Search -->
+                    <div class="filter-group">
+                        <h6>{% trans "Aktor/rejissyor bo‘yicha qidirish" %}</h6>
+                        <input type="text" name="actors" class="form-control" placeholder="{% trans 'Введите имя актера...' %}" value="{{ request.GET.actors }}">
+                    </div>
+                    
+                    <!-- Year Range -->
+                    <div class="filter-group">
+                        <h6>{% trans "Yil" %}</h6>
+                        <div class="row">
+                            <div class="col-6">
+                                <input type="number" class="form-control" name="year_from" placeholder="Dan" value="{{ request.GET.year_from }}" min="1900" max="2100">
+                            </div>
+                            <div class="col-6">
+                                <input type="number" class="form-control" name="year_to" placeholder="Gacha" value="{{ request.GET.year_to }}" min="1900" max="2100">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button type="button" class="btn btn-primary w-100 mb-2" id="applyFiltersBtn">
+                        <i class="fas fa-check"></i> {% trans "Применить" %}
+                    </button>
+                    <a href="{% url 'movie_list' %}" class="btn btn-outline-light w-100">
+                        <i class="fas fa-times"></i> {% trans "Сбросить" %}
+                    </a>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Movies Grid -->
+        <div class="col-lg-9">
+            {% if movies %}
+            <p class="text-muted mb-4">
+                {% trans "Найдено" %}: <strong>{{ page_obj.paginator.count }}</strong> {% trans "фильмов" %}
+            </p>
+            
+            <div class="content-grid">
+                {% for movie in movies %}
+                <div class="movie-card">
+                    <div class="movie-poster">
+                        <img src="{% if movie.poster %}{{ movie.poster.url }}{% else %}{% static 'img/no-poster.png' %}{% endif %}" alt="{{ movie.title_uz }}" loading="lazy">
+                        <div class="movie-overlay">
+                            <h3 class="h6">
+                                {{ movie.title_uz }}
+                            </h3>
+                            <div class="movie-actions">
+                                <a href="{{ movie.get_absolute_url }}" class="btn-icon">
+                                    <i class="fas fa-play"></i>
+                                </a>
+                                {% if user.is_authenticated %}
+                                <button class="btn-icon favorite-btn" data-type="movie" data-id="{{ movie.id }}">
+                                    <i class="far fa-heart"></i>
+                                </button>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="movie-info">
+                        <h3 class="movie-title">
+                            <a href="{{ movie.get_absolute_url }}">
+                                {{ movie.title_uz }}
+                            </a>
+                        </h3>
+                        <div class="movie-meta">
+                            <span>{{ movie.year }}</span>
+                            <span class="movie-rating">
+                                <i class="fas fa-star"></i> {{ movie.rating_avg|floatformat:1 }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            
+            <!-- Pagination -->
+            {% include 'partials/pagination.html' %}
+            
+            {% else %}
+            <div class="text-center py-5">
+                <i class="fas fa-film fa-5x text-muted mb-4"></i>
+                <h3>{% trans "Фильмы не найдены" %}</h3>
+                <p class="text-muted">{% trans "Попробуйте изменить фильтры" %}</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/favorites.js' %}"></script>
+<script src="{% static 'js/filters.js' %}"></script>
+{% endblock %}
+

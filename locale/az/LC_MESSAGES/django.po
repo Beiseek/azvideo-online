@@ -1,0 +1,832 @@
+# Azerbaijani translation for Kinosite
+msgid ""
+msgstr ""
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-10-13 15:59+0300\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+
+#: .\templates\account\login.html:4 .\templates\account\login.html:13
+#: .\templates\base.html:171
+msgid "Вход"
+msgstr "Giriş"
+
+#: .\templates\account\login.html:20
+msgid "Имя пользователя или Email"
+msgstr "İstifadəçi adı və ya E-poçt"
+
+#: .\templates\account\login.html:25 .\templates\account\signup.html:42
+msgid "Пароль"
+msgstr "Şifrə"
+
+#: .\templates\account\login.html:32
+msgid "Запомнить меня"
+msgstr "Məni yadda saxla"
+
+#: .\templates\account\login.html:38 .\templates\account\signup.html:62
+msgid "Подтвердите, что вы не робот"
+msgstr "Robot olmadığınızı təsdiqləyin"
+
+#: .\templates\account\login.html:40 .\templates\account\signup.html:64
+#: .\templates\movies\movie_detail.html:327
+#: .\templates\movies\series_detail.html:199
+msgid "reCAPTCHA отключена для разработки"
+msgstr "reCAPTCHA tərtibat üçün deaktiv edilib"
+
+#: .\templates\account\login.html:45 .\templates\account\signup.html:85
+msgid "Войти"
+msgstr "Daxil ol"
+
+#: .\templates\account\login.html:50
+msgid "Забыли пароль?"
+msgstr "Şifrəni unutmusunuz?"
+
+#: .\templates\account\login.html:57
+msgid "Или войти через"
+msgstr "Və ya bununla daxil olun"
+
+#: .\templates\account\login.html:70
+msgid "Нет аккаунта?"
+msgstr "Hesabınız yoxdur?"
+
+#: .\templates\account\login.html:71 .\templates\account\signup.html:69
+#, fuzzy
+#| msgid "Регистрация"
+msgid "Зарегистрироваться"
+msgstr "Qeydiyyatdan keçin"
+
+#: .\templates\account\logout.html:4 .\templates\base.html:164
+msgid "Выход"
+msgstr "Çıxış"
+
+#: .\templates\account\logout.html:12
+msgid "Выход из аккаунта"
+msgstr "Hesabdan çıxış"
+
+#: .\templates\account\logout.html:15
+msgid "Вы уверены, что хотите выйти?"
+msgstr "Çıxmaq istədiyinizə əminsiniz?"
+
+#: .\templates\account\logout.html:23
+msgid "Да, выйти"
+msgstr "Bəli, çıx"
+
+#: .\templates\account\logout.html:30
+msgid "Отмена"
+msgstr "Ləğv et"
+
+#: .\templates\account\signup.html:4 .\templates\account\signup.html:12
+#: .\templates\base.html:174
+msgid "Регистрация"
+msgstr "Qeydiyyat"
+
+#: .\templates\account\signup.html:28
+msgid "Имя пользователя"
+msgstr "İstifadəçi adı"
+
+#: .\templates\account\signup.html:30
+msgid "Введите имя пользователя"
+msgstr "İstifadəçi adını daxil edin"
+
+#: .\templates\account\signup.html:35
+msgid "Email (необязательно)"
+msgstr "E-poçt (istəyə bağlı)"
+
+#: .\templates\account\signup.html:37
+msgid "Введите email (необязательно)"
+msgstr "E-poçt daxil edin (istəyə bağlı)"
+
+#: .\templates\account\signup.html:44
+msgid "Введите пароль"
+msgstr "Şifrəni daxil edin"
+
+#: .\templates\account\signup.html:47
+msgid "Минимум 8 символов"
+msgstr "Minimum 8 simvol"
+
+#: .\templates\account\signup.html:48
+msgid "Не должен быть слишком простым"
+msgstr "Çox sadə olmamalıdır"
+
+#: .\templates\account\signup.html:49
+msgid "Не должен состоять только из цифр"
+msgstr "Yalnız rəqəmlərdən ibarət olmamalıdır"
+
+#: .\templates\account\signup.html:55
+msgid "Подтверждение пароля"
+msgstr "Şifrənin təsdiqi"
+
+#: .\templates\account\signup.html:57
+msgid "Повторите пароль"
+msgstr "Şifrəni təkrarlayın"
+
+#: .\templates\account\signup.html:75
+msgid "Или зарегистрироваться через"
+msgstr "Və ya bununla qeydiyyatdan keçin"
+
+#: .\templates\account\signup.html:84
+msgid "Уже есть аккаунт?"
+msgstr "Artıq hesabınız var?"
+
+#: .\templates\base.html:16 .\templates\base.html:24
+msgid ""
+"Eng yaxshi filmlar va seriallar onlayn. Kino yangiliklari, mashhur seriallar "
+"va jahon kinematografiyasining klassikasini tomosha qiling."
+msgstr "Ən yaxşı filmlər və seriallar onlayn. Kino xəbərləri, məşhur seriallar və dünya kinematoqrafiyasının klassiklərini izləyin."
+
+#: .\templates\base.html:17
+msgid ""
+"filmlar, seriallar, onlayn tomosha qilish, kino, yangi filmlar, premyera"
+msgstr "filmlər, seriallar, onlayn izləmək, kino, yeni filmlər, premyera"
+
+#: .\templates\base.html:23
+msgid "Filmlar va seriallar"
+msgstr "Filmlər və Seriallar"
+
+#: .\templates\base.html:31
+msgid "Смотрите лучшие фильмы и сериалы онлайн"
+msgstr "Ən yaxşı filmləri və serialları onlayn izləyin"
+
+#: .\templates\base.html:88 .\templates\base.html:212
+#: .\templates\movies\index.html:4
+msgid "Главная"
+msgstr "Əsas səhifə"
+
+#: .\templates\base.html:93 .\templates\movies\news_list.html:4
+#: .\templates\movies\news_list.html:8
+msgid "Новости"
+msgstr "Xəbərlər"
+
+#: .\templates\base.html:98 .\templates\base.html:213
+#: .\templates\movies\movie_list.html:4 .\templates\movies\search.html:30
+#: .\templates\users\favorites.html:14 .\templates\users\watchlist.html:17
+msgid "Фильмы"
+msgstr "Filmlər"
+
+#: .\templates\base.html:103 .\templates\base.html:214
+#: .\templates\movies\search.html:31 .\templates\movies\series_list.html:4
+#: .\templates\users\favorites.html:39 .\templates\users\watchlist.html:23
+msgid "Сериалы"
+msgstr "Seriallar"
+
+#: .\templates\base.html:111
+msgid "Поиск фильмов, сериалов..."
+msgstr "Filmləri, serialları axtarın..."
+
+#: .\templates\base.html:154 .\templates\users\profile.html:4
+msgid "Профиль"
+msgstr "Profil"
+
+#: .\templates\base.html:155 .\templates\movies\movie_detail.html:196
+#: .\templates\movies\series_detail.html:63 .\templates\users\favorites.html:4
+#: .\templates\users\favorites.html:8
+msgid "Избранное"
+msgstr "Seçilmişlər"
+
+#: .\templates\base.html:156 .\templates\movies\movie_detail.html:200
+#: .\templates\users\watchlist.html:4
+msgid "Мой список"
+msgstr "Mənim siyahım"
+
+#: .\templates\base.html:157
+msgid "История"
+msgstr "Tarix"
+
+#: .\templates\base.html:205 .\templates\base.html:245
+msgid ""
+"Лучшие фильмы и сериалы онлайн. Смотрите новинки кино, популярные сериалы и "
+"классику мирового кинематографа."
+msgstr "Ən yaxşı filmlər və seriallar onlayn. Kino yeniliklərini, populyar serialları və dünya kinematoqrafiyasının klassiklərini izləyin."
+
+#: .\templates\base.html:210
+#, fuzzy
+#| msgid "Регистрация"
+msgid "Навигация"
+msgstr "Naviqasiya"
+
+#: .\templates\base.html:219 .\templates\movies\index.html:193
+#: .\templates\movies\movie_detail.html:160
+#: .\templates\movies\movie_list.html:22
+#: .\templates\movies\series_detail.html:46
+#: .\templates\movies\series_list.html:63
+msgid "Janrlar"
+msgstr "Janrlar"
+
+#: .\templates\base.html:228
+msgid "Ma'lumot"
+msgstr "Məlumat"
+
+#: .\templates\base.html:230
+msgid "Biz haqimizda"
+msgstr "Haqqımızda"
+
+#: .\templates\base.html:231
+msgid "Kontaktlar"
+msgstr "Əlaqə"
+
+#: .\templates\base.html:232
+msgid "Qoidalar"
+msgstr "Qaydalar"
+
+#: .\templates\base.html:233
+msgid "Maxfiylik"
+msgstr "Məxfilik"
+
+#: .\templates\base.html:250
+msgid "Все права защищены."
+msgstr "Bütün hüquqlar qorunur."
+
+#: .\templates\base.html:255
+msgid "Создано с"
+msgstr "İlə yaradıldı"
+
+#: .\templates\base.html:255
+msgid "для любителей кино"
+msgstr "kino həvəskarları üçün"
+
+#: .\templates\base.html:269
+msgid ""
+"Мы используем cookies для улучшения работы сайта. Продолжая использовать "
+"сайт, вы соглашаетесь с нашей политикой конфиденциальности."
+msgstr "Saytın işini yaxşılaşdırmaq üçün cookie-lərdən istifadə edirik. Saytdan istifadə etməyə davam edərək, məxfilik siyasətimizlə razılaşırsınız."
+
+#: .\templates\base.html:273
+msgid "Принять"
+msgstr "Qəbul et"
+
+#: .\templates\base.html:274
+msgid "Отклонить"
+msgstr "Rədd et"
+
+#: .\templates\includes\pagination.html:3
+msgid "Навигация по страницам"
+msgstr "Səhifə naviqasiyası"
+
+#: .\templates\includes\pagination.html:7
+#, fuzzy
+#| msgid "Регистрация"
+msgid "Первая страница"
+msgstr "İlk səhifə"
+
+#: .\templates\includes\pagination.html:12
+msgid "Предыдущая страница"
+msgstr "Əvvəlki səhifə"
+
+#: .\templates\includes\pagination.html:32
+msgid "Следующая страница"
+msgstr "Növbəti səhifə"
+
+#: .\templates\includes\pagination.html:37
+msgid "Последняя страница"
+msgstr "Son səhifə"
+
+#: .\templates\movies\genre.html:11
+msgid "Janr"
+msgstr "Janr"
+
+#: .\templates\movies\genre.html:27 .\templates\movies\series_list.html:155
+msgid "Нет постера"
+msgstr "Poster yoxdur"
+
+#: .\templates\movies\genre.html:33 .\templates\movies\index.html:42
+#: .\templates\movies\index.html:91 .\templates\movies\index.html:153
+#: .\templates\movies\series_detail.html:139
+#: .\templates\movies\series_list.html:164 .\templates\users\history.html:40
+#: .\templates\users\history.html:44
+msgid "Смотреть"
+msgstr "Bax"
+
+#: .\templates\movies\genre.html:37 .\templates\movies\index.html:95
+#: .\templates\movies\index.html:157
+#, fuzzy
+#| msgid "Избранное"
+msgid "В избранное"
+msgstr "Seçilmişlərə əlavə et"
+
+#: .\templates\movies\genre.html:40 .\templates\movies\index.html:98
+#: .\templates\movies\index.html:160
+#, fuzzy
+#| msgid "Мой список"
+msgid "В список"
+msgstr "Siyahıya əlavə et"
+
+#: .\templates\movies\genre.html:61 .\templates\movies\search.html:59
+#, fuzzy
+#| msgid "Фильмы"
+msgid "Фильм"
+msgstr "Film"
+
+#: .\templates\movies\genre.html:63 .\templates\movies\search.html:59
+#, fuzzy
+#| msgid "Сериалы"
+msgid "Сериал"
+msgstr "Serial"
+
+#: .\templates\movies\genre.html:72
+msgid "Bu janr bo‘yicha hozircha hech narsa topilmadi."
+msgstr "Bu janr üzrə hələ heç nə tapılmadı."
+
+#: .\templates\movies\index.html:46
+msgid "Трейлер"
+msgstr "Treyler"
+
+#: .\templates\movies\index.html:72
+msgid "Популярные фильмы"
+msgstr "Populyar filmlər"
+
+#: .\templates\movies\index.html:75
+msgid "Смотреть все"
+msgstr "Hamısına bax"
+
+#: .\templates\movies\index.html:127
+msgid "Нет доступных фильмов"
+msgstr "Mövcud film yoxdur"
+
+#: .\templates\movies\index.html:137
+msgid "Новые сериалы"
+msgstr "Yeni seriallar"
+
+#: .\templates\movies\index.html:140
+#, fuzzy
+#| msgid "Новые сериалы"
+msgid "Все сериалы"
+msgstr "Bütün seriallar"
+
+#: .\templates\movies\index.html:183
+msgid "Нет доступных сериалов"
+msgstr "Mövcud serial yoxdur"
+
+#: .\templates\movies\movie_detail.html:139
+#: .\templates\movies\series_detail.html:28
+msgid "Год"
+msgstr "İl"
+
+#: .\templates\movies\movie_detail.html:144
+msgid "Длительность"
+msgstr "Müddət"
+
+#: .\templates\movies\movie_detail.html:145
+msgid "мин"
+msgstr "dəq"
+
+#: .\templates\movies\movie_detail.html:149
+#: .\templates\movies\news_detail.html:11
+msgid "Просмотры"
+msgstr "Baxışlar"
+
+#: .\templates\movies\movie_detail.html:153
+#: .\templates\movies\series_detail.html:40
+msgid "Рейтинг"
+msgstr "Reytinq"
+
+#: .\templates\movies\movie_detail.html:155
+msgid "оценок"
+msgstr "qiymətləndirmə"
+
+#: .\templates\movies\movie_detail.html:166
+#: .\templates\movies\movie_detail.html:177
+msgid "Не указано"
+msgstr "Göstərilməyib"
+
+#: .\templates\movies\movie_detail.html:171
+#: .\templates\movies\movie_list.html:41 .\templates\movies\series_list.html:83
+msgid "Страны"
+msgstr "Ölkələr"
+
+#: .\templates\movies\movie_detail.html:184
+#, fuzzy
+#| msgid "Смотреть все"
+msgid "Смотреть фильм"
+msgstr "Filmə bax"
+
+#: .\templates\movies\movie_detail.html:189
+#: .\templates\movies\series_detail.html:57
+#, fuzzy
+#| msgid "Смотреть все"
+msgid "Смотреть трейлер"
+msgstr "Treylerə bax"
+
+#: .\templates\movies\movie_detail.html:205
+msgid "Поделиться"
+msgstr "Paylaş"
+
+#: .\templates\movies\movie_detail.html:251
+#: .\templates\movies\series_detail.html:75
+msgid "Описание"
+msgstr "Təsvir"
+
+#: .\templates\movies\movie_detail.html:261
+#: .\templates\movies\series_detail.html:85
+msgid "Режиссеры"
+msgstr "Rejissorlar"
+
+#: .\templates\movies\movie_detail.html:272
+#: .\templates\movies\series_detail.html:96
+msgid "В ролях"
+msgstr "Rollarda"
+
+#: .\templates\movies\movie_detail.html:288
+#, fuzzy
+#| msgid "Популярные фильмы"
+msgid "Оцените фильм"
+msgstr "Filmi qiymətləndirin"
+
+#: .\templates\movies\movie_detail.html:298
+#: .\templates\movies\series_detail.html:171
+#, fuzzy
+#| msgid "оценок"
+msgid "Ваша оценка"
+msgstr "Sizin qiymətiniz"
+
+#: .\templates\movies\movie_detail.html:300
+#: .\templates\movies\series_detail.html:173
+msgid "Нажмите на звезду для оценки"
+msgstr "Qiymətləndirmək üçün ulduza basın"
+
+#: .\templates\movies\movie_detail.html:314
+#: .\templates\movies\series_detail.html:187
+msgid "Комментарии"
+msgstr "Şərhlər"
+
+#: .\templates\movies\movie_detail.html:321
+#: .\templates\movies\series_detail.html:194
+#, fuzzy
+#| msgid "Комментарии"
+msgid "Ваш комментарий..."
+msgstr "Sizin şərhiniz..."
+
+#: .\templates\movies\movie_detail.html:332
+#: .\templates\movies\series_detail.html:204
+#: .\templates\movies\series_detail.html:393
+msgid "Отправить"
+msgstr "Göndər"
+
+#: .\templates\movies\movie_detail.html:335
+#: .\templates\movies\series_detail.html:207
+msgid "Комментарии проходят модерацию"
+msgstr "Şərhlər moderasiyadan keçir"
+
+#: .\templates\movies\movie_detail.html:341
+#: .\templates\movies\series_detail.html:213
+msgid "Войдите"
+msgstr "Daxil olun"
+
+#: .\templates\movies\movie_detail.html:341
+#: .\templates\movies\series_detail.html:213
+msgid "чтобы оставить комментарий"
+msgstr "şərh yazmaq üçün"
+
+#: .\templates\movies\movie_detail.html:356
+#: .\templates\movies\series_detail.html:228
+#, fuzzy
+#| msgid "Комментарии"
+msgid "Пока нет комментариев"
+msgstr "Hələ şərh yoxdur"
+
+#: .\templates\movies\movie_detail.html:367
+#, fuzzy
+#| msgid "Популярные фильмы"
+msgid "Похожие фильмы"
+msgstr "Oxşar filmlər"
+
+#: .\templates\movies\movie_detail.html:563
+#, fuzzy
+#| msgid "Популярные фильмы"
+msgid "Поделиться фильмом"
+msgstr "Filmi paylaş"
+
+#: .\templates\movies\movie_detail.html:569
+msgid "Выберите социальную сеть для отправки ссылки на фильм"
+msgstr "Filmə keçid göndərmək üçün sosial şəbəkə seçin"
+
+#: .\templates\movies\movie_detail.html:623
+msgid "Копировать"
+msgstr "Kopyala"
+
+#: .\templates\movies\movie_detail.html:637
+#: .\templates\movies\movie_detail.html:645
+#: .\templates\movies\movie_detail.html:668
+#, fuzzy
+#| msgid "Популярные фильмы"
+msgid "Посмотрите этот фильм"
+msgstr "Bu filmə baxın"
+
+#: .\templates\movies\movie_detail.html:677
+#: .\templates\movies\movie_detail.html:687
+msgid "Ссылка скопирована в буфер обмена"
+msgstr "Keçid mübadilə buferinə kopyalandı"
+
+#: .\templates\movies\movie_list.html:8
+msgid "Каталог фильмов"
+msgstr "Film kataloqu"
+
+#: .\templates\movies\movie_list.html:15 .\templates\movies\series_list.html:58
+#, fuzzy
+#| msgid "Фильмы"
+msgid "Фильтры"
+msgstr "Filtrlər"
+
+#: .\templates\movies\movie_list.html:59
+#: .\templates\movies\series_list.html:102
+msgid "Aktor/rejissyor bo‘yicha qidirish"
+msgstr "Aktyor/rejissor üzrə axtarış"
+
+#: .\templates\movies\movie_list.html:60
+#: .\templates\movies\series_list.html:103
+msgid "Введите имя актера..."
+msgstr "Aktyorun adını daxil edin..."
+
+#: .\templates\movies\movie_list.html:65
+#: .\templates\movies\series_list.html:108
+msgid "Yil"
+msgstr "İl"
+
+#: .\templates\movies\movie_list.html:77
+#: .\templates\movies\series_list.html:131
+msgid "Применить"
+msgstr "Tətbiq et"
+
+#: .\templates\movies\movie_list.html:80
+#: .\templates\movies\series_list.html:134
+msgid "Сбросить"
+msgstr "Sıfırla"
+
+#: .\templates\movies\movie_list.html:90
+#: .\templates\movies\series_list.html:143
+msgid "Найдено"
+msgstr "Tapıldı"
+
+#: .\templates\movies\movie_list.html:90
+#, fuzzy
+#| msgid "Фильмы"
+msgid "фильмов"
+msgstr "film"
+
+#: .\templates\movies\movie_list.html:137
+msgid "Фильмы не найдены"
+msgstr "Filmlər tapılmadı"
+
+#: .\templates\movies\movie_list.html:138
+#: .\templates\movies\series_list.html:197
+msgid "Попробуйте изменить фильтры"
+msgstr "Filtrləri dəyişməyə cəhd edin"
+
+#: .\templates\movies\news_list.html:21
+msgid "Подробнее"
+msgstr "Daha ətraflı"
+
+#: .\templates\movies\news_list.html:30
+msgid "Пока нет новостей."
+msgstr "Hələlik xəbər yoxdur."
+
+#: .\templates\movies\search.html:4 .\templates\movies\search.html:15
+msgid "Поиск"
+msgstr "Axtarış"
+
+#: .\templates\movies\search.html:13
+msgid "Результаты поиска"
+msgstr "Axtarış nəticələri"
+
+#: .\templates\movies\search.html:24
+#, fuzzy
+#| msgid "Поиск фильмов, сериалов..."
+msgid "Поиск фильмов, сериалов, актеров..."
+msgstr "Filmləri, serialları, aktyorları axtarın..."
+
+#: .\templates\movies\search.html:29 .\templates\movies\series_list.html:123
+msgid "Все"
+msgstr "Hamısı"
+
+#: .\templates\movies\search.html:48
+msgid "Найдено результатов"
+msgstr "Nəticə tapıldı"
+
+#: .\templates\movies\search.html:117
+msgid "Ничего не найдено"
+msgstr "Heç nə tapılmadı"
+
+#: .\templates\movies\search.html:118
+msgid "Попробуйте изменить поисковый запрос"
+msgstr "Axtarış sorğusunu dəyişməyə cəhd edin"
+
+#: .\templates\movies\series_detail.html:32
+msgid "Сезонов"
+msgstr "Mövsümlər"
+
+#: .\templates\movies\series_detail.html:36
+#: .\templates\movies\series_list.html:121
+msgid "Статус"
+msgstr "Status"
+
+#: .\templates\movies\series_detail.html:111
+msgid "Сезоны и эпизоды"
+msgstr "Mövsümlər və epizodlar"
+
+#: .\templates\movies\series_detail.html:117
+msgid "Сезон"
+msgstr "Mövsüm"
+
+#: .\templates\movies\series_detail.html:118
+msgid "эпизодов"
+msgstr "epizod"
+
+#: .\templates\movies\series_detail.html:142
+msgid "Видео недоступно"
+msgstr "Video mövcud deyil"
+
+#: .\templates\movies\series_detail.html:161
+#, fuzzy
+#| msgid "Новые сериалы"
+msgid "Оцените сериал"
+msgstr "Serialı qiymətləndirin"
+
+#: .\templates\movies\series_detail.html:369
+msgid "Отправка..."
+msgstr "Göndərilir..."
+
+#: .\templates\movies\series_list.html:52
+#, fuzzy
+#| msgid "Поиск фильмов, сериалов..."
+msgid "Каталог сериалов"
+msgstr "Seriallar kataloqu"
+
+#: .\templates\movies\series_list.html:124
+msgid "В производстве"
+msgstr "İstehsalatda"
+
+#: .\templates\movies\series_list.html:125
+msgid "Завершен"
+msgstr "Tamamlanıb"
+
+#: .\templates\movies\series_list.html:126
+msgid "Отменен"
+msgstr "Ləğv edilib"
+
+#: .\templates\movies\series_list.html:143
+#, fuzzy
+#| msgid "Сериалы"
+msgid "сериалов"
+msgstr "serial"
+
+#: .\templates\movies\series_list.html:196
+msgid "Сериалы не найдены"
+msgstr "Seriallar tapılmadı"
+
+#: .\templates\socialaccount\authentication_error.html:4
+msgid "Ошибка аутентификации"
+msgstr "Doğrulama xətası"
+
+#: .\templates\socialaccount\authentication_error.html:14
+msgid "Ошибка входа"
+msgstr "Giriş xətası"
+
+#: .\templates\socialaccount\authentication_error.html:17
+msgid ""
+"Произошла ошибка при входе через социальную сеть. Пожалуйста, попробуйте "
+"снова."
+msgstr "Sosial şəbəkə vasitəsilə daxil olarkən xəta baş verdi. Zəhmət olmasa, yenidən cəhd edin."
+
+#: .\templates\socialaccount\authentication_error.html:22
+msgid "Детали ошибки:"
+msgstr "Xəta təfərrüatları:"
+
+#: .\templates\socialaccount\authentication_error.html:29
+#: .\templates\socialaccount\login_cancelled.html:22
+msgid "Попробовать снова"
+msgstr "Yenidən cəhd edin"
+
+#: .\templates\socialaccount\authentication_error.html:33
+#: .\templates\socialaccount\login.html:38
+#: .\templates\socialaccount\login_cancelled.html:26
+#, fuzzy
+#| msgid "Главная"
+msgid "На главную"
+msgstr "Əsas səhifəyə"
+
+#: .\templates\socialaccount\login.html:4
+#: .\templates\socialaccount\login.html:14
+msgid "Вход через Google"
+msgstr "Google ilə daxil ol"
+
+#: .\templates\socialaccount\login.html:17
+msgid ""
+"Вы будете перенаправлены на страницу Google для авторизации. После успешного "
+"входа вы вернетесь на наш сайт."
+msgstr "Doğrulama üçün Google səhifəsinə yönləndiriləcəksiniz. Uğurlu girişdən sonra saytımıza geri dönəcəksiniz."
+
+#: .\templates\socialaccount\login.html:25
+msgid "Продолжить с Google"
+msgstr "Google ilə davam et"
+
+#: .\templates\socialaccount\login.html:34
+msgid "Вернуться к входу"
+msgstr "Girişə qayıt"
+
+#: .\templates\socialaccount\login_cancelled.html:4
+#: .\templates\socialaccount\login_cancelled.html:14
+msgid "Вход отменен"
+msgstr "Giriş ləğv edildi"
+
+#: .\templates\socialaccount\login_cancelled.html:17
+msgid ""
+"Вы отменили вход через социальную сеть. Если это было сделано по ошибке, "
+"попробуйте снова."
+msgstr "Siz sosial şəbəkə vasitəsilə girişi ləğv etdiniz. Əgər bu səhvən edilibsə, yenidən cəhd edin."
+
+#: .\templates\users\favorites.html:65
+#, fuzzy
+#| msgid "Избранное"
+msgid "Избранное пусто"
+msgstr "Seçilmişlər boşdur"
+
+#: .\templates\users\favorites.html:66
+msgid "Добавляйте понравившиеся фильмы и сериалы"
+msgstr "Bəyəndiyiniz filmləri və serialları əlavə edin"
+
+#: .\templates\users\favorites.html:68
+#, fuzzy
+#| msgid "Смотреть все"
+msgid "Смотреть фильмы"
+msgstr "Filmlərə bax"
+
+#: .\templates\users\history.html:4 .\templates\users\history.html:9
+msgid "История просмотров"
+msgstr "Baxış tarixçəsi"
+
+#: .\templates\users\history.html:29
+#, fuzzy
+#| msgid "Просмотры"
+msgid "Просмотрено"
+msgstr "Baxılıb"
+
+#: .\templates\users\history.html:31
+msgid "Добавлено в избранное"
+msgstr "Seçilmişlərə əlavə edilib"
+
+#: .\templates\users\history.html:33
+msgid "Оценено"
+msgstr "Qiymətləndirilib"
+
+#: .\templates\users\history.html:86
+#, fuzzy
+#| msgid "История"
+msgid "История пуста"
+msgstr "Tarixçə boşdur"
+
+#: .\templates\users\history.html:88
+#, fuzzy
+#| msgid "Просмотры"
+msgid "Начать просмотр"
+msgstr "Baxmağa başla"
+
+#: .\templates\users\profile.html:26
+#, fuzzy
+#| msgid "Регистрация"
+msgid "Дата регистрации"
+msgstr "Qeydiyyat tarixi"
+
+#: .\templates\users\profile.html:34
+msgid "Последняя активность"
+msgstr "Son fəaliyyət"
+
+#: .\templates\users\profile.html:43
+#, fuzzy
+#| msgid "Просмотры"
+msgid "Просмотр"
+msgstr "Baxış"
+
+#: .\templates\users\profile.html:45
+msgid "Оценка"
+msgstr "Qiymət"
+
+#: .\templates\users\profile.html:47
+#, fuzzy
+#| msgid "Комментарии"
+msgid "Комментарий"
+msgstr "Şərh"
+
+#: .\templates\users\profile.html:49
+msgid "Добавление в избранное"
+msgstr "Seçilmişlərə əlavə"
+
+#: .\templates\users\profile.html:59
+msgid "Активности пока нет"
+msgstr "Hələlik fəaliyyət yoxdur"
+
+#: .\templates\users\watchlist.html:9
+msgid "Мой список для просмотра"
+msgstr "Mənim baxış siyahım"
+
+#: .\templates\users\watchlist.html:62
+msgid "У вас пока нет фильмов в списке"
+msgstr "Sizin siyahınızda hələ film yoxdur"
+
+#: .\templates\users\watchlist.html:64 .\templates\users\watchlist.html:104
+msgid "Перейти к каталогу"
+msgstr "Kataloqa keç"
+
+#: .\templates\users\watchlist.html:102
+msgid "У вас пока нет сериалов в списке"
+msgstr "Sizin siyahınızda hələ serial yoxdur"
+
+#~ msgid "Жанры"
+#~ msgstr "Janrlar"

@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Выход" %}{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card bg-dark text-white shadow-lg">
+                <div class="card-body p-5 text-center">
+                    <h2 class="fw-bold mb-4 text-uppercase">{% trans "Выход из аккаунта" %}</h2>
+                    
+                    <p class="text-light mb-4">
+                        {% trans "Вы уверены, что хотите выйти?" %}
+                    </p>
+                    
+                    <form method="post" action="{% url 'account_logout' %}">
+                        {% csrf_token %}
+                        
+                        <div class="d-grid gap-2 mb-3">
+                            <button type="submit" class="btn btn-danger btn-lg">
+                                <i class="fas fa-sign-out-alt"></i> {% trans "Да, выйти" %}
+                            </button>
+                        </div>
+                    </form>
+                    
+                    <div class="d-grid gap-2">
+                        <a href="{% url 'home' %}" class="btn btn-outline-light">
+                            <i class="fas fa-arrow-left"></i> {% trans "Отмена" %}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

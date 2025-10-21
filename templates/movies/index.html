@@ -1,0 +1,212 @@
+{% extends 'base.html' %}
+{% load static i18n %}
+
+{% block title %}{{ SITE_NAME }} - {% trans "Главная" %}{% endblock %}
+
+{% block content %}
+<!-- Hero Slider -->
+{% if featured_movies %}
+<section class="hero-slider">
+    <div id="heroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            {% for movie in featured_movies %}
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="{{ forloop.counter0 }}" 
+                    {% if forloop.first %}class="active"{% endif %} aria-label="Slide {{ forloop.counter }}"></button>
+            {% endfor %}
+        </div>
+        
+        <div class="carousel-inner">
+            {% for movie in featured_movies %}
+            <div class="carousel-item {% if forloop.first %}active{% endif %}" 
+                 style="background-image: url('{% if movie.backdrop %}{{ movie.backdrop.url }}{% else %}{{ movie.poster.url }}{% endif %}');">
+                <div class="container">
+                    <div class="hero-content">
+                        <h1 class="hero-title">
+                            {{ movie.title_uz }}
+                        </h1>
+                        
+                        <div class="hero-meta">
+                            <span><i class="fas fa-calendar"></i> {{ movie.year }}</span>
+                            <span class="rating-stars">
+                                <i class="fas fa-star"></i> {{ movie.rating_avg|floatformat:1 }}
+                            </span>
+                            <span><i class="fas fa-eye"></i> {{ movie.views }}</span>
+                        </div>
+                        
+                        <p class="hero-description">
+                            {{ movie.description_uz|striptags|truncatewords:30 }}
+                        </p>
+                        
+                        <div class="d-flex gap-3">
+                            <a href="{{ movie.get_absolute_url }}" class="btn btn-primary">
+                                <i class="fas fa-play"></i> {% trans "Смотреть" %}
+                            </a>
+                            {% if movie.trailer_url %}
+                            <a href="{{ movie.trailer_url }}" target="_blank" class="btn btn-outline-light">
+                                <i class="fas fa-film"></i> {% trans "Трейлер" %}
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</section>
+{% endif %}
+
+<!-- Popular Movies Section -->
+<section class="container my-5">
+    <div class="section-header">
+        <h2 class="section-title">
+            <i class="fas fa-fire"></i> {% trans "Популярные фильмы" %}
+        </h2>
+        <a href="{% url 'movie_list' %}" class="view-all-link">
+            {% trans "Смотреть все" %} <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+    
+    <div class="content-grid">
+        {% for movie in popular_movies %}
+        <div class="movie-card">
+            <div class="movie-poster">
+                <img src="{% if movie.poster %}{{ movie.poster.url }}{% else %}{% static 'img/no-poster.png' %}{% endif %}" alt="{{ movie.title_uz }}" loading="lazy">
+                <div class="movie-overlay">
+                    <h3 class="h6">
+                        <a href="{{ movie.get_absolute_url }}" class="text-decoration-none">
+                            {{ movie.title_uz }}
+                        </a>
+                    </h3>
+                    <div class="movie-actions">
+                        <a href="{{ movie.get_absolute_url }}" class="btn-icon" title="{% trans 'Смотреть' %}">
+                            <i class="fas fa-play"></i>
+                        </a>
+                        {% if user.is_authenticated %}
+                        <button class="btn-icon favorite-btn" data-type="movie" data-id="{{ movie.id }}" title="{% trans 'В избранное' %}">
+                            <i class="{% if movie in user.profile.favorite_movies.all %}fas{% else %}far{% endif %} fa-heart"></i>
+                        </button>
+                        <button class="btn-icon watchlist-btn" data-type="movie" data-id="{{ movie.id }}" title="{% trans 'В список' %}">
+                            <i class="{% if movie in user.profile.watchlist_movies.all %}fas{% else %}far{% endif %} fa-bookmark"></i>
+                        </button>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="movie-info">
+                <h3 class="movie-title">
+                    <a href="{{ movie.get_absolute_url }}">
+                        {{ movie.title_uz }}
+                    </a>
+                </h3>
+                <div class="movie-meta">
+                    <span>{{ movie.year }}</span>
+                    <span class="movie-rating">
+                        <i class="fas fa-star"></i> {{ movie.rating_avg|floatformat:1 }}
+                    </span>
+                </div>
+                <div class="movie-genres">
+                    {% for genre in movie.genres.all|slice:":3" %}
+                    <span class="genre-badge">
+                        {{ genre.name_az }}
+                    </span>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-center text-muted">{% trans "Нет доступных фильмов" %}</p>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- New Series Section -->
+{% if new_series %}
+<section class="container my-5">
+    <div class="section-header">
+        <h2 class="section-title">
+            <i class="fas fa-tv"></i> {% trans "Новые сериалы" %}
+        </h2>
+        <a href="{% url 'series_list' %}" class="view-all-link">
+            {% trans "Все сериалы" %} <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+    <div class="row">
+        {% for series in new_series %}
+        <div class="col-6 col-md-4 col-lg-2 mb-4">
+            <div class="movie-card">
+                <div class="movie-poster">
+                    <a href="{{ series.get_absolute_url }}">
+                        <img src="{{ series.poster_thumbnail.url }}" class="img-fluid" alt="{{ series.title_uz }}">
+                    </a>
+                    <div class="movie-overlay">
+                        <div class="movie-actions">
+                            <a href="{{ series.get_absolute_url }}" class="btn-icon" title="{% trans 'Смотреть' %}">
+                                <i class="fas fa-play"></i>
+                            </a>
+                            {% if user.is_authenticated %}
+                            <button class="btn-icon favorite-btn" data-type="series" data-id="{{ series.id }}" title="{% trans 'В избранное' %}">
+                                <i class="{% if series in user.profile.favorite_series.all %}fas{% else %}far{% endif %} fa-heart"></i>
+                            </button>
+                            <button class="btn-icon watchlist-btn" data-type="series" data-id="{{ series.id }}" title="{% trans 'В список' %}">
+                                <i class="{% if series in user.profile.watchlist_series.all %}fas{% else %}far{% endif %} fa-bookmark"></i>
+                            </button>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">
+                        <a href="{{ series.get_absolute_url }}">
+                            {{ series.title_uz }}
+                        </a>
+                    </h3>
+                    <div class="movie-meta">
+                        <span>{{ series.year }}</span>
+                        <span class="movie-rating">
+                            <i class="fas fa-star"></i> {{ series.rating_avg|floatformat:1 }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-center text-muted">{% trans "Нет доступных сериалов" %}</p>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+
+<!-- Genres Section -->
+<section class="container my-5">
+    <div class="section-header">
+        <h2 class="section-title">
+            <i class="fas fa-list"></i> {% trans "Janrlar" %}
+        </h2>
+    </div>
+    
+    <div class="row">
+        {% for genre in genres %}
+        <div class="col-md-4 col-lg-3 mb-3">
+            <a href="{% url 'genre' genre.slug %}" class="btn btn-outline-light w-100">
+                {{ genre.name_az }}
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/favorites.js' %}"></script>
+{% endblock %}
+

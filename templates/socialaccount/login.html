@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static i18n socialaccount %}
+
+{% block title %}{% trans "Вход через Google" %} - {{ SITE_NAME }}{% endblock %}
+
+{% block content %}
+<div class="container my-5" style="padding-top: 100px;">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card bg-dark text-white">
+                <div class="card-body p-5 text-center">
+                    <i class="fab fa-google text-danger" style="font-size: 4rem; margin-bottom: 1.5rem;"></i>
+                    
+                    <h2 class="card-title mb-3">{% trans "Вход через Google" %}</h2>
+                    
+                    <p class="text-light mb-4">
+                        {% trans "Вы будете перенаправлены на страницу Google для авторизации. После успешного входа вы вернетесь на наш сайт." %}
+                    </p>
+                    
+                    <form method="post" action="{% provider_login_url 'google' process='login' %}">
+                        {% csrf_token %}
+                        
+                        <div class="d-grid gap-2 mb-3">
+                            <button type="submit" class="btn btn-danger btn-lg">
+                                <i class="fab fa-google"></i> {% trans "Продолжить с Google" %}
+                            </button>
+                        </div>
+                    </form>
+                    
+                    <hr class="my-4">
+                    
+                    <div class="d-grid gap-2">
+                        <a href="{% url 'account_login' %}" class="btn btn-outline-light">
+                            <i class="fas fa-arrow-left"></i> {% trans "Вернуться к входу" %}
+                        </a>
+                        
+                        <a href="{% url 'home' %}" class="btn btn-outline-secondary">
+                            <i class="fas fa-home"></i> {% trans "На главную" %}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+

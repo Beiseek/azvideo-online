@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load static i18n %}
+
+{% block title %}{% trans "История просмотров" %} - {{ SITE_NAME }}{% endblock %}
+
+{% block content %}
+<div class="container my-5" style="padding-top: 100px;">
+    <h1 class="mb-4">
+        <i class="fas fa-history"></i> {% trans "История просмотров" %}
+    </h1>
+    
+    {% if activities %}
+    <div class="row">
+        <div class="col-12">
+            <div class="list-group">
+                {% for activity in activities %}
+                <div class="list-group-item bg-dark text-white border-secondary mb-2">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-{% if activity.content_type == 'movie' %}film{% else %}tv{% endif %} fa-2x text-danger"></i>
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+                            <h5 class="mb-1">{{ activity.content_title }}</h5>
+                            <p class="mb-1 text-muted">
+                                <i class="fas fa-clock"></i> {{ activity.created_at|date:"d.m.Y H:i" }}
+                            </p>
+                            <small class="text-muted">
+                                {% if activity.activity_type == 'view' %}
+                                    {% trans "Просмотрено" %}
+                                {% elif activity.activity_type == 'favorite' %}
+                                    {% trans "Добавлено в избранное" %}
+                                {% elif activity.activity_type == 'rating' %}
+                                    {% trans "Оценено" %}
+                                {% endif %}
+                            </small>
+                        </div>
+                        <div class="flex-shrink-0">
+                            {% if activity.content_type == 'movie' %}
+                            <a href="{% if activity.content_slug %}{% url 'movie_detail' activity.content_slug %}{% else %}#{% endif %}" class="btn btn-sm btn-outline-danger">
+                                {% trans "Смотреть" %}
+                            </a>
+                            {% else %}
+                            <a href="{% if activity.content_slug %}{% url 'series_detail' activity.content_slug %}{% else %}#{% endif %}" class="btn btn-sm btn-outline-danger">
+                                {% trans "Смотреть" %}
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            
+            <!-- Pagination -->
+            {% if is_paginated %}
+            <nav class="mt-4">
+                <ul class="pagination justify-content-center">
+                    {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link bg-dark text-white border-secondary" href="?page={{ page_obj.previous_page_number }}">
+                            <i class="fas fa-chevron-left"></i>
+                        </a>
+                    </li>
+                    {% endif %}
+                    
+                    <li class="page-item active">
+                        <span class="page-link bg-danger border-danger">
+                            {{ page_obj.number }}
+                        </span>
+                    </li>
+                    
+                    {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link bg-dark text-white border-secondary" href="?page={{ page_obj.next_page_number }}">
+                            <i class="fas fa-chevron-right"></i>
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+            {% endif %}
+        </div>
+    </div>
+    {% else %}
+    <div class="text-center py-5">
+        <i class="fas fa-history text-muted" style="font-size: 4rem;"></i>
+        <p class="text-muted mt-3">{% trans "История пуста" %}</p>
+        <a href="{% url 'home' %}" class="btn btn-danger">
+            {% trans "Начать просмотр" %}
+        </a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+

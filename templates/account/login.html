@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static i18n socialaccount %}
+
+{% block title %}{% trans "Вход" %} - {{ SITE_NAME }}{% endblock %}
+
+{% block content %}
+<div class="container my-5" style="padding-top: 100px;">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-4">
+            <div class="card bg-dark text-white">
+                <div class="card-body p-5">
+                    <h2 class="text-center mb-4">
+                        <i class="fas fa-sign-in-alt"></i> {% trans "Вход" %}
+                    </h2>
+                    
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <label class="form-label">{% trans "Имя пользователя или Email" %}</label>
+                            <input type="text" name="login" class="form-control" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">{% trans "Пароль" %}</label>
+                            <input type="password" name="password" class="form-control" required>
+                        </div>
+                        
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="remember" name="remember">
+                            <label class="form-check-label" for="remember">
+                                {% trans "Запомнить меня" %}
+                            </label>
+                        </div>
+                        
+                        <!-- Google reCAPTCHA (отключена для разработки) -->
+                        <div class="mb-3">
+                            <label class="form-label">{% trans "Подтвердите, что вы не робот" %}</label>
+                            <div class="alert alert-info">
+                                <i class="fas fa-info-circle"></i> {% trans "reCAPTCHA отключена для разработки" %}
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary w-100 mb-3">
+                            {% trans "Войти" %}
+                        </button>
+                        
+                        <div class="text-center mb-3">
+                            <a href="{% url 'account_reset_password' %}" class="text-muted">
+                                {% trans "Забыли пароль?" %}
+                            </a>
+                        </div>
+                        
+                        <hr>
+                        
+                        <div class="text-center mb-3">
+                            <p class="text-muted">{% trans "Или войти через" %}:</p>
+                        </div>
+                        
+                        <a href="{% provider_login_url 'google' %}" class="btn btn-outline-light w-100 mb-2">
+                            <i class="fab fa-google"></i> Google
+                        </a>
+                        
+                        <a href="{% provider_login_url 'facebook' %}" class="btn btn-outline-light w-100">
+                            <i class="fab fa-facebook"></i> Facebook
+                        </a>
+                        
+                        <div class="text-center mt-4">
+                            <p class="text-muted">
+                                {% trans "Нет аккаунта?" %}
+                                <a href="{% url 'account_signup' %}">{% trans "Зарегистрироваться" %}</a>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

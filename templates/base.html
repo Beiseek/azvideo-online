@@ -1,0 +1,340 @@
+{% load static i18n %}
+<!DOCTYPE html>
+<html lang="{{ CURRENT_LANGUAGE }}">
+<head>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-MRJV7HQ9');</script>
+    <!-- End Google Tag Manager -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    <meta name="description" content="{% block meta_description %}{% trans "Eng yaxshi filmlar va seriallar onlayn. Kino yangiliklari, mashhur seriallar va jahon kinematografiyasining klassikasini tomosha qiling." %}{% endblock %}">
+    <meta name="keywords" content="{% block meta_keywords %}{% trans "filmlar, seriallar, onlayn tomosha qilish, kino, yangi filmlar, premyera" %}{% endblock %}">
+    <meta name="author" content="KinoSite">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta property="og:title" content="{% block og_title %}{{ SITE_NAME }} - {% trans "Filmlar va seriallar" %}{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}{% trans "Eng yaxshi filmlar va seriallar onlayn. Kino yangiliklari, mashhur seriallar va jahon kinematografiyasining klassikasini tomosha qiling." %}{% endblock %}">
+    <meta property="og:image" content="{% block og_image %}{% static 'images/og-image.jpg' %}{% endblock %}">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="{{ request.build_absolute_uri }}">
+    <meta property="twitter:title" content="{% block twitter_title %}{{ SITE_NAME }}{% endblock %}">
+    <meta property="twitter:description" content="{% block twitter_description %}{% trans "Смотрите лучшие фильмы и сериалы онлайн" %}{% endblock %}">
+    
+    <title>{% block title %}{{ SITE_NAME }}{% endblock %}</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/png">
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Noto+Sans:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    
+    <!-- Video.js CSS -->
+    <link href="https://vjs.zencdn.net/8.6.1/video-js.css" rel="stylesheet">
+    
+    {% block extra_css %}{% endblock %}
+    
+    {% if GOOGLE_ANALYTICS_ID %}
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ GOOGLE_ANALYTICS_ID }}"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', '{{ GOOGLE_ANALYTICS_ID }}');
+    </script>
+    {% endif %}
+</head>
+<body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MRJV7HQ9"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'home' %}">
+                <i class="fas fa-film"></i> <span class="brand-text">KINOSITE</span>
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'home' %}">
+                            <i class="fas fa-home"></i> {% trans "Главная" %}
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'news_list' %}">
+                            <i class="fas fa-newspaper"></i> {% trans "Новости" %}
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'movie_list' %}">
+                            <i class="fas fa-video"></i> {% trans "Фильмы" %}
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'series_list' %}">
+                            <i class="fas fa-tv"></i> {% trans "Сериалы" %}
+                        </a>
+                    </li>
+                </ul>
+                
+                <!-- Search Form -->
+                <form class="d-flex search-form me-3" role="search" action="{% url 'search' %}" method="get">
+                    <div class="input-group">
+                        <input class="form-control search-input" type="search" placeholder="{% trans 'Поиск фильмов, сериалов...' %}" name="q" aria-label="Search" required>
+                        <button class="btn btn-outline-light" type="submit" id="searchBtn">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </form>
+                
+                <!-- Language Switcher (пока отключен, используем только узбекский) -->
+                {% comment %}
+                <div class="dropdown me-3">
+                    <button class="btn btn-outline-light btn-sm dropdown-toggle" type="button" id="languageDropdown" data-bs-toggle="dropdown">
+                        <i class="fas fa-globe"></i> {{ CURRENT_LANGUAGE|upper }}
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end" aria-labelledby="languageDropdown">
+                        {% for lang_code, lang_name in LANGUAGES %}
+                        <li>
+                            <form action="{% url 'set_language' %}" method="post" class="d-inline">
+                                {% csrf_token %}
+                                <input type="hidden" name="language" value="{{ lang_code }}">
+                                <input type="hidden" name="next" value="{{ request.path }}">
+                                <button type="submit" class="dropdown-item {% if CURRENT_LANGUAGE == lang_code %}active{% endif %}">
+                                    {{ lang_name }}
+                                </button>
+                            </form>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endcomment %}
+                
+                <!-- User Menu -->
+                <div class="user-menu">
+                    {% if user.is_authenticated %}
+                    <div class="dropdown">
+                        <button class="btn btn-link text-white dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown">
+                            {% if user.profile.avatar %}
+                            <img src="{{ user.profile.avatar.url }}" alt="{{ user.username }}" class="user-avatar">
+                            {% else %}
+                            <i class="fas fa-user-circle fa-2x"></i>
+                            {% endif %}
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end" aria-labelledby="userDropdown">
+                            <li><a class="dropdown-item" href="{% url 'profile' %}"><i class="fas fa-user"></i> {% trans "Профиль" %}</a></li>
+                            <li><a class="dropdown-item" href="{% url 'favorites' %}"><i class="fas fa-heart"></i> {% trans "Избранное" %}</a></li>
+                            <li><a class="dropdown-item" href="{% url 'watchlist' %}"><i class="fas fa-bookmark"></i> {% trans "Мой список" %}</a></li>
+                            <li><a class="dropdown-item" href="{% url 'history' %}"><i class="fas fa-history"></i> {% trans "История" %}</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <form id="logout-form" action="{% url 'account_logout' %}" method="post" style="display: none;">
+                                    {% csrf_token %}
+                                </form>
+                                <a class="dropdown-item" href="#" onclick="document.getElementById('logout-form').submit(); return false;">
+                                    <i class="fas fa-sign-out-alt"></i> {% trans "Выход" %}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    {% else %}
+                    <a href="{% url 'account_login' %}" class="btn btn-primary btn-sm me-2">
+                        <i class="fas fa-sign-in-alt"></i> {% trans "Вход" %}
+                    </a>
+                    <a href="{% url 'account_signup' %}" class="btn btn-outline-light btn-sm">
+                        <i class="fas fa-user-plus"></i> {% trans "Регистрация" %}
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+        {% if messages %}
+        <div class="container mt-4">
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        
+        {% block content %}{% endblock %}
+    </main>
+    
+    <!-- Footer -->
+    <footer class="footer mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <h5><i class="fas fa-film"></i> {{ SITE_NAME }}</h5>
+                    <p class="text-muted">
+                        {% trans "Лучшие фильмы и сериалы онлайн. Смотрите новинки кино, популярные сериалы и классику мирового кинематографа." %}
+                    </p>
+                </div>
+                
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h6>{% trans "Навигация" %}</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="{% url 'home' %}">{% trans "Главная" %}</a></li>
+                        <li><a href="{% url 'movie_list' %}">{% trans "Фильмы" %}</a></li>
+                        <li><a href="{% url 'series_list' %}">{% trans "Сериалы" %}</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h6>{% trans "Janrlar" %}</h6>
+                    <ul class="list-unstyled">
+                        {% for genre in genres|slice:":6" %}
+                        <li><a href="{% url 'genre' genre.slug %}">{{ genre.name_az }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h6>{% trans "Ma'lumot" %}</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="{% url 'static_page' 'about' %}">{% trans "Biz haqimizda" %}</a></li>
+                        <li><a href="{% url 'static_page' 'contacts' %}">{% trans "Kontaktlar" %}</a></li>
+                        <li><a href="{% url 'static_page' 'rules' %}">{% trans "Qoidalar" %}</a></li>
+                        <li><a href="{% url 'static_page' 'privacy' %}">{% trans "Maxfiylik" %}</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Social block removed by request -->
+            </div>
+            
+            <hr class="my-4">
+            
+            <div class="row">
+                <div class="col-12 text-center mb-3">
+                    <p class="text-light mb-2">
+                        {% trans "Лучшие фильмы и сериалы онлайн. Смотрите новинки кино, популярные сериалы и классику мирового кинематографа." %}
+                    </p>
+                </div>
+                <div class="col-md-6">
+                    <p class="text-light small mb-0">
+                        &copy; {% now "Y" %} {{ SITE_NAME }}. {% trans "Все права защищены." %}
+                    </p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="text-light small mb-0">
+                        {% trans "Создано с" %} <i class="fas fa-heart text-danger"></i> {% trans "для любителей кино" %}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Cookie Consent -->
+    <div class="cookie-consent" id="cookieConsent">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-9">
+                    <p class="mb-0">
+                        <i class="fas fa-cookie-bite"></i>
+                        {% trans "Мы используем cookies для улучшения работы сайта. Продолжая использовать сайт, вы соглашаетесь с нашей политикой конфиденциальности." %}
+                    </p>
+                </div>
+                <div class="col-md-3 text-md-end mt-2 mt-md-0">
+                    <button class="btn btn-sm btn-light me-2" onclick="acceptCookies()">{% trans "Принять" %}</button>
+                    <button class="btn btn-sm btn-outline-light" onclick="declineCookies()">{% trans "Отклонить" %}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- jQuery (for AJAX) -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    
+    <!-- Video.js JavaScript -->
+    <script src="https://vjs.zencdn.net/8.6.1/video.min.js"></script>
+    
+    <!-- Custom JS -->
+    <script src="{% static 'js/main.js' %}"></script>
+    
+    {% block extra_js %}{% endblock %}
+    
+    <script>
+        // Cookie Consent
+        function acceptCookies() {
+            localStorage.setItem('cookieConsent', 'accepted');
+            document.getElementById('cookieConsent').style.display = 'none';
+        }
+        
+        function declineCookies() {
+            localStorage.setItem('cookieConsent', 'declined');
+            document.getElementById('cookieConsent').style.display = 'none';
+        }
+        
+        // Check if user has already given consent
+        if (localStorage.getItem('cookieConsent')) {
+            document.getElementById('cookieConsent').style.display = 'none';
+        }
+        
+        // CSRF Token для AJAX запросов
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        const csrftoken = getCookie('csrftoken');
+        
+        // Setup AJAX with CSRF
+        $.ajaxSetup({
+            beforeSend: function(xhr, settings) {
+                if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                }
+            }
+        });
+    </script>
+    
+    <!-- Filters JavaScript - загружается только на страницах фильмов -->
+</body>
+</html>
+

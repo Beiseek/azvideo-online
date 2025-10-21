@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static i18n %}
+
+{% block title %}{{ news.title_uz }} - {{ SITE_NAME }}{% endblock %}
+
+{% block content %}
+<div class="container my-5" style="padding-top: 60px;">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <h1 class="mb-3">{{ news.title_uz }}</h1>
+            <p class="text-muted">{{ news.created_at|date:"d.m.Y" }} • {% trans "Просмотры" %}: {{ news.views }}</p>
+            {% if news.image %}
+            <img src="{{ news.image.url }}" class="img-fluid mb-4" alt="{{ news.title_uz }}">
+            {% endif %}
+            <div class="news-content">
+                {{ news.content_uz|linebreaks }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

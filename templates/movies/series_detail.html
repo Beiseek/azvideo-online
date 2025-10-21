@@ -1,0 +1,412 @@
+{% extends 'base.html' %}
+{% load static i18n %}
+
+{% block title %}{{ series.title_uz }} - {{ SITE_NAME }}{% endblock %}
+
+{% block meta_description %}{{ series.description_uz|truncatewords:25 }}{% endblock %}
+{% block meta_keywords %}{{ series.title_az|default:series.title_uz }}, {% for genre in series.genres.all %}{{ genre.name_az|default:genre.name_uz }}, {% endfor %}{% for actor in series.actors.all|slice:":5" %}{{ actor.name }}, {% endfor %}{{ series.year }}{% endblock %}
+
+{% block og_title %}{{ series.title_uz }} - Barcha qismlar onlayn{% endblock %}
+{% block og_description %}{{ series.description_uz|truncatewords:25 }}{% endblock %}
+{% block og_image %}{{ series.poster.url }}{% endblock %}
+
+{% block content %}
+<div class="series-detail-container" style="background-image: url('{{ series.backdrop.url }}');">
+    <div class="series-detail-overlay"></div>
+    <div class="container detail-content">
+        <div class="row">
+            <div class="col-lg-4 mb-4">
+                <img src="{{ series.poster.url }}" alt="{{ series.title_uz }}" class="detail-poster">
+            </div>
+            <div class="col-lg-8">
+                <h1 class="display-4 fw-bold mb-3">
+                    {{ series.title_uz }}
+                </h1>
+                
+                <div class="d-flex flex-wrap gap-4 mb-4">
+                    <div>
+                        <span class="text-muted"><i class="fas fa-calendar"></i> {% trans "Год" %}:</span>
+                        <strong>{{ series.year }}</strong>
+                    </div>
+                    <div>
+                        <span class="text-muted"><i class="fas fa-list-ol"></i> {% trans "Сезонов" %}:</span>
+                        <strong>{{ series.seasons_count }}</strong>
+                    </div>
+                    <div>
+                        <span class="text-muted"><i class="fas fa-info-circle"></i> {% trans "Статус" %}:</span>
+                        <strong>{{ series.get_status_display }}</strong>
+                    </div>
+                    <div>
+                        <span class="text-muted"><i class="fas fa-star text-warning"></i> {% trans "Рейтинг" %}:</span>
+                        <strong>{{ series.rating_avg|floatformat:1 }} / 5.0</strong>
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                            <strong><i class="fas fa-list"></i> {% trans "Janrlar" %}:</strong>
+                    {% for genre in series.genres.all %}
+                    <a href="{% url 'genre' genre.slug %}" class="badge bg-danger text-white ms-2">
+                        {{ genre.name_az|default:genre.name_uz }}
+                    </a>
+                    {% endfor %}
+                </div>
+                
+                <div class="d-flex gap-3 mb-4">
+                    {% if series.trailer_url %}
+                    <button class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#trailerModal">
+                        <i class="fas fa-play"></i> Treylerə bax
+                    </button>
+                    {% endif %}
+                    
+                    {% if user.is_authenticated %}
+                    <button class="btn btn-outline-light favorite-btn" data-type="series" data-id="{{ series.id }}">
+                        <i class="{% if is_favorite %}fas{% else %}far{% endif %} fa-heart"></i> {% trans "Избранное" %}
+                    </button>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container my-5">
+    <div class="row">
+        <div class="col-lg-8">
+            <h2 class="mb-4"><i class="fas fa-info-circle"></i> {% trans "Описание" %}</h2>
+            <div class="content-text">
+                {{ series.description_az|default:series.description_uz|safe }}
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <!-- Cast & Crew -->
+            {% if series.directors.all %}
+            <div class="mb-4">
+                <h5><i class="fas fa-user-tie"></i> {% trans "Режиссеры" %}</h5>
+                <ul class="list-unstyled">
+                    {% for director in series.directors.all %}
+                    <li>{{ director.name }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+
+            {% if series.actors.all %}
+            <div class="mb-4">
+                <h5><i class="fas fa-users"></i> {% trans "В ролях" %}</h5>
+                <ul class="list-unstyled">
+                    {% for actor in series.actors.all|slice:":10" %}
+                    <li>{{ actor.name }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Seasons & Episodes -->
+    {% if seasons %}
+    <div class="row mb-5">
+        <div class="col-12">
+            <h2 class="mb-4"><i class="fas fa-list-ol"></i> {% trans "Сезоны и эпизоды" %}</h2>
+            <div class="accordion" id="seasonsAccordion">
+                {% for season in series.seasons.all %}
+                <div class="accordion-item bg-dark text-white mb-3">
+                    <h2 class="accordion-header" id="heading{{ season.id }}">
+                        <button class="accordion-button bg-dark text-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ season.id }}">
+                            <strong>{% trans "Сезон" %} {{ season.display_number }}</strong>
+                            <span class="ms-3 text-muted">{{ season.episodes.count }} {% trans "эпизодов" %}</span>
+                        </button>
+                    </h2>
+                    <div id="collapse{{ season.id }}" class="accordion-collapse collapse" data-bs-parent="#seasonsAccordion">
+                        <div class="accordion-body">
+                            <ul class="list-group list-group-flush">
+                                {% for episode in season.episodes.all %}
+                                <li class="list-group-item bg-dark text-white">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h5 class="mb-1">E{{ episode.display_number }}. {{ episode.title_uz }}</h5>
+                                        <small>{{ episode.duration }} мин.</small>
+                                    </div>
+                                    <div class="episode-player-container mt-3" id="player-container-{{ episode.id }}" style="display: none;">
+                                         <!-- Контейнер для плеера -->
+                                    </div>
+                                    
+                                    {% if episode.video_file or episode.video_url %}
+                                        <button class="btn btn-sm btn-outline-danger mt-2 play-episode-btn" 
+                                                data-episode-id="{{ episode.id }}"
+                                                data-video-src="{% if episode.video_file %}{% url 'serve_episode_video' series.slug season.season_number episode.episode_number %}{% else %}{{ episode.video_url }}{% endif %}"
+                                                data-is-iframe="{{ episode.video_url|yesno:'true,false' }}">
+                                            {% trans "Смотреть" %}
+                                        </button>
+                                    {% else %}
+                                        <span class="text-muted">{% trans "Видео недоступно" %}</span>
+                                    {% endif %}
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    
+    <!-- Rating Section -->
+    {% if user.is_authenticated %}
+    <div class="row mt-5">
+        <div class="col-lg-8">
+            <div class="comment-section">
+                <h3 class="mb-4"><i class="fas fa-star"></i> {% trans "Оцените сериал" %}</h3>
+                <div class="rating-widget" id="ratingWidget" data-series-id="{{ series.id }}">
+                    {% for i in "12345" %}
+                    <span class="star {% if user_rating and forloop.counter <= user_rating %}active{% endif %}" data-value="{{ forloop.counter }}">
+                        <i class="fas fa-star"></i>
+                    </span>
+                    {% endfor %}
+                </div>
+                <p class="mt-2 text-white">
+                    {% if user_rating %}
+                        {% trans "Ваша оценка" %}: <strong class="text-danger">{{ user_rating }}/5</strong>
+                    {% else %}
+                        {% trans "Нажмите на звезду для оценки" %}
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    
+    <!-- Comments Section -->
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="comment-section">
+                <h3 class="mb-4">
+                    <i class="fas fa-comments"></i> 
+                    {% trans "Комментарии" %} ({{ comments.count }})
+                </h3>
+                
+                {% if user.is_authenticated %}
+                <form id="commentForm" class="mb-4">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <textarea class="form-control" name="text" rows="4" placeholder="{% trans 'Ваш комментарий...' %}" required></textarea>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle"></i> {% trans "reCAPTCHA отключена для разработки" %}
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary" id="commentSubmitBtn">
+                        <i class="fas fa-paper-plane"></i> {% trans "Отправить" %}
+                    </button>
+                    <p class="text-white small mt-2">
+                        <i class="fas fa-info-circle"></i> {% trans "Комментарии проходят модерацию" %}
+                    </p>
+                </form>
+                {% else %}
+                <p class="alert alert-info">
+                    <i class="fas fa-sign-in-alt"></i>
+                    <a href="{% url 'account_login' %}">{% trans "Войдите" %}</a> {% trans "чтобы оставить комментарий" %}
+                </p>
+                {% endif %}
+                
+                <!-- Comments List -->
+                <div id="commentsList">
+                    {% for comment in comments %}
+                    <div class="comment-item">
+                        <div class="comment-author">
+                            <i class="fas fa-user-circle"></i> {{ comment.user.username }}
+                        </div>
+                        <div class="comment-date">{{ comment.created_at|date:"d M Y, H:i" }}</div>
+                        <div class="comment-text mt-2">{{ comment.text }}</div>
+                    </div>
+                    {% empty %}
+                    <p class="text-white">{% trans "Пока нет комментариев" %}</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Trailer Modal -->
+{% if series.trailer_url %}
+<div class="modal fade trailer-modal" id="trailerModal" tabindex="-1">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body p-0">
+                <div class="trailer-container" id="trailerContainer"></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .rating-widget {
+        display: flex;
+        gap: 5px;
+        font-size: 2rem;
+        cursor: pointer;
+    }
+    
+    .rating-widget .star {
+        color: #555;
+        transition: color 0.2s ease;
+    }
+    
+    .rating-widget .star.active,
+    .rating-widget .star:hover,
+    .rating-widget .star:hover ~ .star {
+        color: #ffc107;
+    }
+    
+    .comment-section {
+        background: var(--card-bg);
+        border-radius: 10px;
+        padding: 30px;
+        margin-top: 30px;
+    }
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/favorites.js' %}"></script>
+<script>
+    // Rating functionality
+    $('#ratingWidget .star').on('click', function() {
+        const rating = $(this).data('value');
+        const seriesId = $('#ratingWidget').data('series-id');
+        
+        $.ajax({
+            url: `/api/series/${seriesId}/rate/`,
+            method: 'POST',
+            data: { score: rating },
+            headers: { 'X-CSRFToken': '{{ csrf_token }}' },
+            success: function() {
+                showToast('Спасибо за оценку!', 'success');
+                setTimeout(() => location.reload(), 1500);
+            },
+            error: function() {
+                showToast('Ошибка при сохранении оценки', 'danger');
+            }
+        });
+    });
+
+    // Episode play functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        // Handle episode play buttons
+        document.querySelectorAll('.play-episode-btn').forEach(function(button) {
+            button.addEventListener('click', function() {
+                const episodeId = this.getAttribute('data-episode-id');
+                const videoSrc = this.getAttribute('data-video-src');
+                const isIframe = this.getAttribute('data-is-iframe') === 'true';
+                const playerContainer = document.getElementById('player-container-' + episodeId);
+                
+                // Hide all other players first
+                document.querySelectorAll('.episode-player-container').forEach(function(container) {
+                    container.style.display = 'none';
+                });
+                
+                // Show current player container
+                playerContainer.style.display = 'block';
+                
+                if (isIframe) {
+                    // For iframe videos (YouTube, etc.)
+                    playerContainer.innerHTML = '<iframe width="100%" height="400" src="' + videoSrc + '" frameborder="0" allowfullscreen></iframe>';
+                } else {
+                    // For video files
+                    playerContainer.innerHTML = `
+                        <video id="episode-${episodeId}-video" class="video-js vjs-default-skin vjs-big-play-centered" controls preload="auto" width="100%" height="auto" data-setup="{}">
+                            <source src="${videoSrc}" type="video/mp4">
+                            <p class="vjs-no-js">
+                                To view this video please enable JavaScript, and consider upgrading to a web browser that
+                                <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+                            </p>
+                        </video>
+                    `;
+                    
+                    // Initialize Video.js for the new player
+                    if (typeof videojs !== 'undefined') {
+                        videojs('episode-' + episodeId + '-video', {
+                            fluid: true,
+                            responsive: true
+                        });
+                    }
+                }
+                
+                // Scroll to player
+                playerContainer.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    });
+
+    // Comment submission
+    document.addEventListener('DOMContentLoaded', function() {
+        const commentForm = document.getElementById('commentForm');
+        if (commentForm) {
+            commentForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const commentSubmitBtn = document.getElementById('commentSubmitBtn');
+                const textarea = commentForm.querySelector('textarea[name="text"]');
+                const text = textarea.value.trim();
+
+                if (!text) {
+                    showToast('Введите текст комментария', 'warning');
+                    return;
+                }
+
+                commentSubmitBtn.disabled = true;
+                commentSubmitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> {% trans "Отправка..." %}';
+
+                const formData = {
+                    content_type: 'series',
+                    series: {{ series.id }},
+                    text: text
+                };
+
+                $.ajax({
+                    url: '/api/comments/',
+                    method: 'POST',
+                    data: formData,
+                    headers: {
+                        'X-CSRFToken': $('[name=csrfmiddlewaretoken]').val()
+                    },
+                    success: function(response) {
+                        showToast('Комментарий отправлен на модерацию', 'success');
+                        commentForm.reset();
+                    },
+                    error: function() {
+                        showToast('Ошибка при отправке комментария', 'danger');
+                    },
+                    complete: function() {
+                        commentSubmitBtn.disabled = false;
+                        commentSubmitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> {% trans "Отправить" %}';
+                    }
+                });
+            });
+        }
+    });
+
+    // Load trailer on modal open
+    {% if series.trailer_url %}
+    $('#trailerModal').on('shown.bs.modal', function() {
+        initVideoPlayer('trailerContainer', '{{ series.trailer_url }}');
+    });
+    
+    $('#trailerModal').on('hidden.bs.modal', function() {
+        $('#trailerContainer').html('');
+    });
+    {% endif %}
+</script>
+{% endblock %}
+

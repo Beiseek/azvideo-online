@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+{% load static i18n %}
+
+{% block title %}{% trans "Поиск" %}: {{ query }} - {{ SITE_NAME }}{% endblock %}
+
+{% block content %}
+<div class="container my-5 search-page" style="padding-top: 60px;">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1 class="mb-4">
+                <i class="fas fa-search"></i> 
+                {% if query %}
+                    {% trans "Результаты поиска" %}: "{{ query }}"
+                {% else %}
+                    {% trans "Поиск" %}
+                {% endif %}
+            </h1>
+            
+            <!-- Search Form -->
+            <form method="get" action="{% url 'search' %}" class="mb-4">
+                <div class="row">
+                    <div class="col-md-8">
+                        <input type="text" name="q" class="form-control form-control-lg" 
+                               placeholder="{% trans 'Поиск фильмов, сериалов, актеров...' %}" 
+                               value="{{ query }}" required>
+                    </div>
+                    <div class="col-md-3">
+                        <select name="type" class="form-select form-select-lg">
+                            <option value="all" {% if content_type == 'all' %}selected{% endif %}>{% trans "Все" %}</option>
+                            <option value="movie" {% if content_type == 'movie' %}selected{% endif %}>{% trans "Фильмы" %}</option>
+                            <option value="series" {% if content_type == 'series' %}selected{% endif %}>{% trans "Сериалы" %}</option>
+                        </select>
+                    </div>
+                    <div class="col-md-1">
+                        <button type="submit" class="btn btn-primary btn-lg w-100">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    {% if query %}
+    <div class="row">
+        <div class="col-12">
+            <p class="text-muted mb-4">
+                {% trans "Найдено результатов" %}: <strong>{{ results|length }}</strong>
+            </p>
+            
+            {% if results %}
+            <div class="content-grid">
+                {% for item in results %}
+                <div class="movie-card">
+                    <div class="movie-poster">
+                        <img src="{% if item.object.poster %}{{ item.object.poster.url }}{% else %}{% static 'img/no-poster.png' %}{% endif %}" alt="{{ item.object.title_uz }}" loading="lazy">
+                        <div class="movie-overlay">
+                            <span class="badge bg-primary mb-2">
+                                {% if item.type == 'movie' %}{% trans "Фильм" %}{% else %}{% trans "Сериал" %}{% endif %}
+                            </span>
+                            <h3 class="h6">
+                                <a href="{{ item.object.get_absolute_url }}" class="text-decoration-none">
+                                    {{ item.object.title_uz }}
+                                </a>
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="movie-info">
+                        <h3 class="movie-title">
+                            <a href="{{ item.object.get_absolute_url }}">
+                                {{ item.object.title_uz }}
+                            </a>
+                        </h3>
+                        <div class="movie-meta">
+                            <span>{{ item.object.year }}</span>
+                            <span class="movie-rating">
+                                <i class="fas fa-star"></i> {{ item.object.rating_avg|floatformat:1 }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            
+            <!-- Pagination -->
+            {% if is_paginated %}
+            <nav aria-label="Page navigation" class="mt-5">
+                <ul class="pagination justify-content-center">
+                    {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?q={{ query }}&type={{ content_type }}&page={{ page_obj.previous_page_number }}">
+                            <i class="fas fa-chevron-left"></i>
+                        </a>
+                    </li>
+                    {% endif %}
+                    
+                    {% for num in page_obj.paginator.page_range %}
+                    <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+                        <a class="page-link" href="?q={{ query }}&type={{ content_type }}&page={{ num }}">{{ num }}</a>
+                    </li>
+                    {% endfor %}
+                    
+                    {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?q={{ query }}&type={{ content_type }}&page={{ page_obj.next_page_number }}">
+                            <i class="fas fa-chevron-right"></i>
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+            {% endif %}
+            
+            {% else %}
+            <div class="text-center py-5">
+                <i class="fas fa-search fa-5x text-muted mb-4"></i>
+                <h3>{% trans "Ничего не найдено" %}</h3>
+                <p class="text-muted">{% trans "Попробуйте изменить поисковый запрос" %}</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+

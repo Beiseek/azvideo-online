@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static i18n %}
+
+{% block title %}{% trans "Вход отменен" %} - {{ SITE_NAME }}{% endblock %}
+
+{% block content %}
+<div class="container my-5" style="padding-top: 100px;">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card bg-dark text-white">
+                <div class="card-body p-5 text-center">
+                    <i class="fas fa-times-circle text-warning" style="font-size: 4rem; margin-bottom: 1.5rem;"></i>
+                    
+                    <h2 class="card-title mb-3">{% trans "Вход отменен" %}</h2>
+                    
+                    <p class="text-light mb-4">
+                        {% trans "Вы отменили вход через социальную сеть. Если это было сделано по ошибке, попробуйте снова." %}
+                    </p>
+                    
+                    <div class="d-grid gap-2">
+                        <a href="{% url 'account_login' %}" class="btn btn-danger">
+                            <i class="fas fa-sign-in-alt"></i> {% trans "Попробовать снова" %}
+                        </a>
+                        
+                        <a href="{% url 'home' %}" class="btn btn-outline-light">
+                            <i class="fas fa-home"></i> {% trans "На главную" %}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

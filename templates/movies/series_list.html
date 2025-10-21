@@ -1,0 +1,308 @@
+{% extends 'base.html' %}
+{% load static i18n core_tags %}
+
+{% block title %}{% trans "Сериалы" %} - {{ SITE_NAME }}{% endblock %}
+
+{% block extra_css %}
+<style>
+    .movie-poster {
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .poster-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    
+    .movie-poster:hover .poster-overlay {
+        opacity: 1;
+    }
+    
+    .poster-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+    }
+    
+    .poster-buttons .btn {
+        min-width: 120px;
+        font-size: 0.9rem;
+    }
+    
+    .poster-buttons .btn-sm {
+        padding: 8px 16px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container my-5" style="padding-top: 60px;">
+    {% csrf_token %}
+    <h1 class="mb-4"><i class="fas fa-tv"></i> {% trans "Каталог сериалов" %}</h1>
+    
+    <div class="row">
+        <!-- Filters (synced with movie_list.html) -->
+        <div class="col-lg-3">
+            <div class="filters-sidebar">
+                <h4 class="filter-title mb-3"><i class="fas fa-filter"></i> {% trans "Фильтры" %}</h4>
+                <form method="get" id="filterForm">
+                    <!-- Genres -->
+                    <div class="filter-group">
+                        <button class="btn btn-outline-danger btn-sm w-100 mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#genresCollapse" aria-expanded="false" aria-controls="genresCollapse">
+                            <i class="fas fa-list"></i> {% trans "Janrlar" %} <i class="fas fa-chevron-down ms-1"></i>
+                        </button>
+                        <div class="collapse" id="genresCollapse">
+                            <div class="genres-filter-list">
+                                {% for genre in genres %}
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="genres" value="{{ genre.id }}" id="genre{{ genre.id }}" {% if genre.id|stringformat:"s" in request.GET|get_list:"genres" %}checked{% endif %}>
+                                    <label class="form-check-label" for="genre{{ genre.id }}">
+                                        {{ genre.name_az }}
+                                    </label>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Countries -->
+                    {% if countries %}
+                    <div class="filter-group">
+                        <button class="btn btn-outline-danger btn-sm w-100 mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#countriesCollapse" aria-expanded="false" aria-controls="countriesCollapse">
+                            <i class="fas fa-globe"></i> {% trans "Страны" %} <i class="fas fa-chevron-down ms-1"></i>
+                        </button>
+                        <div class="collapse" id="countriesCollapse">
+                            <div class="countries-filter-list">
+                                {% for country in countries %}
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="countries" value="{{ country.id }}" id="country{{ country.id }}" {% if country.id|stringformat:"s" in request.GET|get_list:"countries" %}checked{% endif %}>
+                                    <label class="form-check-label" for="country{{ country.id }}">
+                                        {{ country.name_az }}
+                                    </label>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <!-- Actors/Directors -->
+                    <div class="filter-group">
+                        <h6>{% trans "Aktor/rejissyor bo‘yicha qidirish" %}</h6>
+                        <input type="text" name="actors" class="form-control" placeholder="{% trans 'Введите имя актера...' %}" value="{{ request.GET.actors }}">
+                    </div>
+
+                    <!-- Year Range -->
+                    <div class="filter-group">
+                        <h6>{% trans "Yil" %}</h6>
+                        <div class="row">
+                            <div class="col-6">
+                                <input type="number" class="form-control" name="year_from" placeholder="Dan" value="{{ request.GET.year_from }}" min="1900" max="2100">
+                            </div>
+                            <div class="col-6">
+                                <input type="number" class="form-control" name="year_to" placeholder="Gacha" value="{{ request.GET.year_to }}" min="1900" max="2100">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Status -->
+                    <div class="filter-group">
+                        <h6>{% trans "Статус" %}</h6>
+                        <select name="status" class="form-select">
+                            <option value="">{% trans "Все" %}</option>
+                            <option value="ongoing" {% if request.GET.status == 'ongoing' %}selected{% endif %}>{% trans "В производстве" %}</option>
+                            <option value="completed" {% if request.GET.status == 'completed' %}selected{% endif %}>{% trans "Завершен" %}</option>
+                            <option value="cancelled" {% if request.GET.status == 'cancelled' %}selected{% endif %}>{% trans "Отменен" %}</option>
+                        </select>
+                    </div>
+
+                    <button type="button" class="btn btn-primary w-100 mb-2" id="applyFiltersBtn">
+                        <i class="fas fa-check"></i> {% trans "Применить" %}
+                    </button>
+                    <a href="{% url 'series_list' %}" class="btn btn-outline-light w-100">
+                        <i class="fas fa-times"></i> {% trans "Сбросить" %}
+                    </a>
+                </form>
+            </div>
+        </div>
+        
+        <div class="col-lg-9">
+            {% if series %}
+            <p class="text-muted mb-4">
+                {% trans "Найдено" %}: <strong>{{ page_obj.paginator.count }}</strong> {% trans "сериалов" %}
+            </p>
+            <div class="content-grid">
+                {% for item in series %}
+                <div class="movie-card">
+                    <div class="movie-poster">
+                        <a href="{{ item.get_absolute_url }}">
+                        {% if item.poster %}
+                            <img src="{{ item.poster.url }}" alt="{{ item.title_uz }}" loading="lazy">
+                        {% else %}
+                            <div class="no-poster">
+                                <i class="fas fa-tv"></i>
+                                <span>{% trans "Нет постера" %}</span>
+                            </div>
+                        {% endif %}
+                        </a>
+                        
+                        <!-- Кнопки на постере -->
+                        <div class="poster-overlay">
+                            <div class="poster-buttons">
+                                <a href="{{ item.get_absolute_url }}" class="btn btn-danger btn-sm">
+                                    <i class="fas fa-play"></i> {% trans "Смотреть" %}
+                                </a>
+                                {% if user.is_authenticated %}
+                                <button class="btn btn-outline-light btn-sm favorite-btn" data-type="series" data-id="{{ item.id }}">
+                                    <i class="far fa-heart"></i>
+                                </button>
+                                <button class="btn btn-outline-light btn-sm watchlist-btn" data-type="series" data-id="{{ item.id }}">
+                                    <i class="far fa-bookmark"></i>
+                                </button>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="movie-info">
+                        <h3 class="movie-title">
+                            <a href="{{ item.get_absolute_url }}">
+                                {{ item.title_uz }}
+                            </a>
+                        </h3>
+                        <div class="movie-meta">
+                            <span>{{ item.year }}</span>
+                            <span class="movie-rating">
+                                <i class="fas fa-star"></i> {{ item.rating_avg|floatformat:1 }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="text-center py-5">
+                <i class="fas fa-tv fa-5x text-muted mb-4"></i>
+                <h3>{% trans "Сериалы не найдены" %}</h3>
+                <p class="text-muted">{% trans "Попробуйте изменить фильтры" %}</p>
+            </div>
+            {% endif %}
+
+            <!-- Pagination -->
+            {% include 'partials/pagination.html' %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/favorites.js' %}"></script>
+<script src="{% static 'js/filters.js' %}"></script>
+<script>
+    // Обработка кнопок избранного и списка просмотра
+    document.addEventListener('DOMContentLoaded', function() {
+        // Кнопки избранного
+        document.querySelectorAll('.favorite-btn').forEach(function(btn) {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                const type = this.dataset.type;
+                const id = this.dataset.id;
+                const icon = this.querySelector('i');
+                
+                // Переключаем иконку
+                if (icon.classList.contains('far')) {
+                    icon.classList.remove('far');
+                    icon.classList.add('fas');
+                } else {
+                    icon.classList.remove('fas');
+                    icon.classList.add('far');
+                }
+                
+                // Отправляем AJAX запрос
+                fetch('/api/favorites/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                    },
+                    body: JSON.stringify({
+                        content_type: type,
+                        object_id: id
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        showToast(data.message, 'success');
+                    } else {
+                        showToast(data.message, 'warning');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    showToast('Ошибка при добавлении в избранное', 'danger');
+                });
+            });
+        });
+        
+        // Кнопки списка просмотра
+        document.querySelectorAll('.watchlist-btn').forEach(function(btn) {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                const type = this.dataset.type;
+                const id = this.dataset.id;
+                const icon = this.querySelector('i');
+                
+                // Переключаем иконку
+                if (icon.classList.contains('far')) {
+                    icon.classList.remove('far');
+                    icon.classList.add('fas');
+                } else {
+                    icon.classList.remove('fas');
+                    icon.classList.add('far');
+                }
+                
+                // Отправляем AJAX запрос
+                fetch('/api/watchlist/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                    },
+                    body: JSON.stringify({
+                        content_type: type,
+                        object_id: id
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        showToast(data.message, 'success');
+                    } else {
+                        showToast(data.message, 'warning');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    showToast('Ошибка при добавлении в список', 'danger');
+                });
+            });
+        });
+    });
+</script>
+{% endblock %}
+

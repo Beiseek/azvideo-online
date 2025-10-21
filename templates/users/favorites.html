@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static i18n %}
+
+{% block title %}{% trans "Избранное" %} - {{ SITE_NAME }}{% endblock %}
+
+{% block content %}
+<div class="container my-5" style="padding-top: 60px;">
+    <h1 class="mb-4"><i class="fas fa-heart"></i> {% trans "Избранное" %}</h1>
+    
+    {% if favorite_movies or favorite_series %}
+    
+    <!-- Favorite Movies -->
+    {% if favorite_movies %}
+    <h3 class="mb-3">{% trans "Фильмы" %}</h3>
+    <div class="content-grid mb-5">
+        {% for movie in favorite_movies %}
+        <div class="movie-card">
+            <div class="movie-poster">
+                <img src="{{ movie.poster.url }}" alt="{{ movie.title_uz }}">
+            </div>
+            <div class="movie-info">
+                <h3 class="movie-title">
+                    <a href="{{ movie.get_absolute_url }}">{{ movie.title_uz }}</a>
+                </h3>
+                <div class="movie-meta">
+                    <span>{{ movie.year }}</span>
+                    <span class="movie-rating">
+                        <i class="fas fa-star"></i> {{ movie.rating_avg|floatformat:1 }}
+                    </span>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    
+    <!-- Favorite Series -->
+    {% if favorite_series %}
+    <h3 class="mb-3">{% trans "Сериалы" %}</h3>
+    <div class="content-grid">
+        {% for series in favorite_series %}
+        <div class="movie-card">
+            <div class="movie-poster">
+                <img src="{{ series.poster.url }}" alt="{{ series.title_uz }}">
+            </div>
+            <div class="movie-info">
+                <h3 class="movie-title">
+                    <a href="{{ series.get_absolute_url }}">{{ series.title_uz }}</a>
+                </h3>
+                <div class="movie-meta">
+                    <span>{{ series.year }}</span>
+                    <span class="movie-rating">
+                        <i class="fas fa-star"></i> {{ series.rating_avg|floatformat:1 }}
+                    </span>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    
+    {% else %}
+    <div class="text-center py-5">
+        <i class="fas fa-heart fa-5x text-muted mb-4"></i>
+        <h3>{% trans "Избранное пусто" %}</h3>
+        <p class="text-muted">{% trans "Добавляйте понравившиеся фильмы и сериалы" %}</p>
+        <a href="{% url 'movie_list' %}" class="btn btn-primary">
+            {% trans "Смотреть фильмы" %}
+        </a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+

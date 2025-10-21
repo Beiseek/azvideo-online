@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load static i18n socialaccount %}
+
+{% block title %}{% trans "Регистрация" %} - {{ SITE_NAME }}{% endblock %}
+
+{% block content %}
+<div class="container my-5" style="padding-top: 100px;">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card bg-dark text-white">
+                <div class="card-body p-5">
+                    <h2 class="card-title text-center mb-4">{% trans "Регистрация" %}</h2>
+                    
+                    {% if form.errors %}
+                    <div class="alert alert-danger">
+                        {% for field, errors in form.errors.items %}
+                            {% for error in errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    
+                    <form method="post" action="{% url 'account_signup' %}">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <label for="id_username" class="form-label">{% trans "Имя пользователя" %}</label>
+                            <input type="text" name="username" class="form-control bg-dark text-white border-secondary" 
+                                   id="id_username" placeholder="{% trans 'Введите имя пользователя' %}" required
+                                   value="{{ form.username.value|default:'' }}">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="id_email" class="form-label">{% trans "Email (необязательно)" %}</label>
+                            <input type="email" name="email" class="form-control bg-dark text-white border-secondary" 
+                                   id="id_email" placeholder="{% trans 'Введите email (необязательно)' %}"
+                                   value="{{ form.email.value|default:'' }}">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="id_password1" class="form-label">{% trans "Пароль" %}</label>
+                            <input type="password" name="password1" class="form-control bg-dark text-white border-secondary" 
+                                   id="id_password1" placeholder="{% trans 'Введите пароль' %}" required>
+                            <small class="form-text text-muted">
+                                <ul class="mt-2 mb-0" style="font-size: 0.85rem;">
+                                    <li>{% trans "Минимум 8 символов" %}</li>
+                                    <li>{% trans "Не должен быть слишком простым" %}</li>
+                                    <li>{% trans "Не должен состоять только из цифр" %}</li>
+                                </ul>
+                            </small>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="id_password2" class="form-label">{% trans "Подтверждение пароля" %}</label>
+                            <input type="password" name="password2" class="form-control bg-dark text-white border-secondary" 
+                                   id="id_password2" placeholder="{% trans 'Повторите пароль' %}" required>
+                        </div>
+                        
+                        <!-- Google reCAPTCHA (отключена для разработки) -->
+                        <div class="mb-4">
+                            <label class="form-label">{% trans "Подтвердите, что вы не робот" %}</label>
+                            <div class="alert alert-info">
+                                <i class="fas fa-info-circle"></i> {% trans "reCAPTCHA отключена для разработки" %}
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-danger w-100 mb-3">
+                            {% trans "Зарегистрироваться" %}
+                        </button>
+                        
+                        <hr>
+                        
+                        <div class="text-center mb-3">
+                            <p class="text-muted">{% trans "Или зарегистрироваться через" %}:</p>
+                        </div>
+                        
+                        <a href="{% provider_login_url 'google' %}" class="btn btn-outline-light w-100 mb-2">
+                            <i class="fab fa-google"></i> Google
+                        </a>
+                        
+                        <div class="text-center mt-4">
+                            <p class="text-muted">
+                                {% trans "Уже есть аккаунт?" %} 
+                                <a href="{% url 'account_login' %}" class="text-danger">{% trans "Войти" %}</a>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
